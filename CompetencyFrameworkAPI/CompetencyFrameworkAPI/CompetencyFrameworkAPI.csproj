@@ -178,6 +178,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
     <Compile Include="DataAccess.cs" />
     <Compile Include="Global.asax.cs">
