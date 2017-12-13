@@ -13,10 +13,11 @@ namespace CompetencyFrameworkAPI
 
         public List<string> GetAllTechnologies()
         {
-            var technologies = new List<string> ();
-            
+            var technologies = new List<string>();
 
-            string connectionString = @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+
+            string connectionString =
+                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
@@ -38,7 +39,7 @@ namespace CompetencyFrameworkAPI
             }
 
             return technologies;
-                
+
         }
 
         public List<string> GetAllJobTitle(string technologyName)
@@ -46,7 +47,8 @@ namespace CompetencyFrameworkAPI
             var jobTitle = new List<string>();
 
 
-            string connectionString = @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            string connectionString =
+                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
@@ -79,8 +81,71 @@ namespace CompetencyFrameworkAPI
             return jobTitle;
 
         }
+
+        public List<string> GetAllArea()
+        {
+            var Area = new List<string>();
+
+
+            string connectionString =
+                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnArea";
+                    command.Connection = connection;
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Area.Add(reader.GetString(1));
+
+                    }
+
+                }
+            }
+
+            return Area;
+
+        }
+
+        public List<string> GetAllTopics()
+        {
+            var Topics = new List<string>();
+
+
+            string connectionString =
+                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnTopics";
+                    command.Connection = connection;
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Topics.Add(reader.GetString(1));
+
+                    }
+
+                }
+            }
+
+            return Topics;
+
+        }
+
     }
-
-
-
 }
+
+
+
