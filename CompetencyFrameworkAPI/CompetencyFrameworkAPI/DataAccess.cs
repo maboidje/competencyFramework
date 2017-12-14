@@ -1,29 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
-using WebGrease.Css.Ast;
 using CompetencyFrameworkAPI.Models;
 
 namespace CompetencyFrameworkAPI
 {
     public class DataAccess
     {
-
         public List<string> GetAllTechnologies()
         {
             var technologies = new List<string>();
-
-
-            string connectionString =
-                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-
                 using (var command = new SqlCommand())
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -33,28 +25,20 @@ namespace CompetencyFrameworkAPI
                     while (reader.Read())
                     {
                         technologies.Add(reader.GetString(1));
-
                     }
-
                 }
             }
-
             return technologies;
-
         }
 
         public List<string> GetAllJobTitle(string technologyName)
         {
             var jobTitle = new List<string>();
-
-
-            string connectionString =
-                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-
                 using (var command = new SqlCommand())
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -73,28 +57,20 @@ namespace CompetencyFrameworkAPI
                     while (reader.Read())
                     {
                         jobTitle.Add(reader.GetString(2));
-
                     }
-
                 }
             }
-
             return jobTitle;
-
         }
 
         public List<string> GetAllArea()
         {
-            var Area = new List<string>();
-
-
-            string connectionString =
-                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            var area = new List<string>();
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-
                 using (var command = new SqlCommand())
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -103,29 +79,21 @@ namespace CompetencyFrameworkAPI
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Area.Add(reader.GetString(1));
-
+                        area.Add(reader.GetString(1));
                     }
-
                 }
             }
-
-            return Area;
-
+            return area;
         }
 
         public List<string> GetAllTopics()
         {
-            var Topics = new List<string>();
-
-
-            string connectionString =
-                @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
+            var topics = new List<string>();
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
             using (var connection = new SqlConnection())
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-
                 using (var command = new SqlCommand())
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -134,74 +102,62 @@ namespace CompetencyFrameworkAPI
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Topics.Add(reader.GetString(1));
-
+                        topics.Add(reader.GetString(1));
                     }
-
                 }
             }
-
-            return Topics;
-
+            return topics;
         }
 
         public List<Competency> GetAllCompetencyList(string technologyName, string jobTitle)
-    {
-        var competencyList = new List<Competency>();
-
-
-        string connectionString = @"data source=PBO-NETSQL04\devstream1; Initial Catalog = Job_Competency_JB_MA; User Id=CompetencyFramework; Password = 1Competency2Framework3";
-        using (var connection = new SqlConnection())
         {
-            connection.ConnectionString = connectionString;
-            connection.Open();
+            var competencyList = new List<Competency>();
 
-            using (var command = new SqlCommand())
+
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
+            using (var connection = new SqlConnection())
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "ReturnAll";
-                command.Connection = connection;
-                var parameter = new SqlParameter
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
                 {
-                    ParameterName = "technologyName",
-                    SqlDbType = SqlDbType.VarChar,
-                    Size = 255,
-                    Value = technologyName,
-                    Direction = ParameterDirection.Input
-                };
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnAll";
+                    command.Connection = connection;
+                    var parameter = new SqlParameter
+                    {
+                        ParameterName = "technologyName",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 255,
+                        Value = technologyName,
+                        Direction = ParameterDirection.Input
+                    };
 
-                var technologyParameter = new SqlParameter
-                {
-                    ParameterName = "jobTitleName",
-                    SqlDbType = SqlDbType.VarChar,
-                    Size = 255,
-                    Value = jobTitle,
-                    Direction = ParameterDirection.Input
-                };
+                    var technologyParameter = new SqlParameter
+                    {
+                        ParameterName = "jobTitleName",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 255,
+                        Value = jobTitle,
+                        Direction = ParameterDirection.Input
+                    };
 
-                command.Parameters.Add(parameter);
-                command.Parameters.Add(technologyParameter);
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-
-                    var competency = new Competency();
-                    competency.TopicName = reader.GetString(0);
-                    competency.AreaName = reader.GetString(1);
-                    competency.CompetencyName = reader.GetString(2);
-                    competency.RatingName = reader.GetString(3);
-                    competencyList.Add((competency));
-
+                    command.Parameters.Add(parameter);
+                    command.Parameters.Add(technologyParameter);
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var competency = new Competency();
+                        competency.TopicName = reader.GetString(0);
+                        competency.AreaName = reader.GetString(1);
+                        competency.CompetencyName = reader.GetString(2);
+                        competency.RatingName = reader.GetString(3);
+                        competencyList.Add((competency));
+                    }
                 }
-
             }
+            return competencyList;
         }
-
-        return competencyList;
-
     }
 }
-}
-
-
-
