@@ -84,7 +84,7 @@ namespace CompetencyFrameworkAPI
 
         public List<string> GetAllArea()
         {
-            var Area = new List<string>();
+            var area = new List<string>();
 
 
             string connectionString =
@@ -102,20 +102,20 @@ namespace CompetencyFrameworkAPI
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Area.Add(reader.GetString(1));
+                        area.Add(reader.GetString(1));
 
                     }
 
                 }
             }
 
-            return Area;
+            return area;
 
         }
 
         public List<string> GetAllTopics()
         {
-            var Topics = new List<string>();
+            var topics = new List<string>();
 
 
             string connectionString =
@@ -133,14 +133,14 @@ namespace CompetencyFrameworkAPI
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Topics.Add(reader.GetString(1));
+                        topics.Add(reader.GetString(1));
 
                     }
 
                 }
             }
 
-            return Topics;
+            return topics;
 
         }
 
