@@ -159,5 +159,73 @@ namespace CompetencyFrameworkAPI
             }
             return competencyList;
         }
+
+        public bool AddUser(User user)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnAll";
+                    command.Connection = connection;
+
+                    var firstNameParameter = new SqlParameter
+                    {
+                        ParameterName = "FirstName",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 25,
+                        Value = user.FirstName,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    var lastNameParameter = new SqlParameter
+                    {
+                        ParameterName = "LastName",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 25,
+                        Value = user.LastName,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    var emailAddressParameter = new SqlParameter
+                    {
+                         ParameterName = "EmailAddress",
+                        SqlDbType = SqlDbType.VarChar,
+                        Size = 50,
+                        Value = user.EmailAddress,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    var jobTitleIdParameter = new SqlParameter
+                    {
+                        ParameterName = "JobTitleID",
+                        SqlDbType = SqlDbType.Int,
+                        Value = user.JobTitleId,
+                        Direction = ParameterDirection.Input
+                    };
+
+                    var alreadyExistParameter = new SqlParameter
+                    {
+                        ParameterName = "AlreadyExists",
+                        SqlDbType = SqlDbType.Bit,
+                        Direction = ParameterDirection.Output
+                    };
+
+                    command.Parameters.Add(firstNameParameter);
+                    command.Parameters.Add(lastNameParameter);
+                    command.Parameters.Add(emailAddressParameter);
+                    command.Parameters.Add(jobTitleIdParameter);
+                    command.Parameters.Add(alreadyExistParameter);
+                    command.ExecuteNonQuery();
+                    return (bool)alreadyExistParameter.Value;
+                }
+            }
+        }
+
     }
 }

@@ -182,11 +182,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
+    <Compile Include="Controllers\CreateAUserController.cs" />
     <Compile Include="Controllers\TopicsController.cs" />
     <Compile Include="DataAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CreateAUser.cs" />
     <Compile Include="Models\Competency.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
