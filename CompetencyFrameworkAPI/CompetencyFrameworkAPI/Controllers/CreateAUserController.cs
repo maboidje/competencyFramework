@@ -8,14 +8,13 @@ using CompetencyFrameworkAPI.Models;
 
 namespace CompetencyFrameworkAPI.Controllers
 {
-    public class CompetencyController : ApiController
+    public class CreateAUserController : ApiController
     {
-        //// GET api/values
-
-        public IEnumerable<Competency> Get(string technologyName, string jobTitle)
-        {
+        [HttpPost]
+        public bool Post(User user)
+        { 
             var dataAccess = new DataAccess();
-            return dataAccess.GetAllCompetencyList(technologyName, jobTitle);
+            return dataAccess.AddUser(user);
         }
     }
 }
