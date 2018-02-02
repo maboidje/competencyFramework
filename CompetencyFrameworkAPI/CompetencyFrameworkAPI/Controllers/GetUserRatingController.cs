@@ -8,13 +8,14 @@ using CompetencyFrameworkAPI.Models;
 
 namespace CompetencyFrameworkAPI.Controllers
 {
-    public class CreateAUserController : ApiController
+    public class GetUserRatingController : ApiController
     {
-        [HttpPost]
-        public bool Post(User user)
-        { 
+
+        public IEnumerable<GetUserRating> Get(int UserID)
+        {
             var dataAccess = new DataAccess();
-            return dataAccess.AddUser(user);
+            return dataAccess.GetAllUserInput(UserID);
         }
     }
 }
+

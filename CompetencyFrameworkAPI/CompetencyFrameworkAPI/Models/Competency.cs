@@ -12,5 +12,9 @@ namespace CompetencyFrameworkAPI.Models
         public string AreaName { get; set; }
         public string CompetencyName { get; set; }
         public string RatingName { get; set; }
+        public string RatingTypeName { get; set; }
+        public int CompetencyID { get; set; }
+        public int RatingTypeID { get; set; }
+        public int RatingID {  get; set; }
     }
 }

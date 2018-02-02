@@ -90,7 +90,7 @@ C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\Compet
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\bin\Microsoft.AI.Web.xml
-C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\obj\Debug\CompetencyFrameworkAPI.csprojResolveAssemblyReference.cache
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\obj\Debug\CompetencyFrameworkAPI.csproj.CoreCompileInputs.cache
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\obj\Debug\CompetencyFrameworkAPI.dll
 C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\obj\Debug\CompetencyFrameworkAPI.pdb
+C:\Users\maboidje\source\repos\competencyFramework\CompetencyFrameworkAPI\CompetencyFrameworkAPI\obj\Debug\CompetencyFrameworkAPI.csprojResolveAssemblyReference.cache
