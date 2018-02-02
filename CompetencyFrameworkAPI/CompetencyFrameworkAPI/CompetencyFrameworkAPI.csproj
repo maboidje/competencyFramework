@@ -180,6 +180,7 @@
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\CompetencyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
     <Compile Include="Controllers\CreateAUserController.cs" />
@@ -190,6 +191,7 @@
     </Compile>
     <Compile Include="Models\CreateAUser.cs" />
     <Compile Include="Models\Competency.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
