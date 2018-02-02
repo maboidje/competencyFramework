@@ -6,11 +6,11 @@ using System.Web;
 
 namespace CompetencyFrameworkAPI.Models
 {
-    public class User
+    public class UserData
     {
+        public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string EmailAddress { get; set; }
-        public int JobTitleId { get; set; }
+    
     }
 }

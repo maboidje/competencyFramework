@@ -8,6 +8,7 @@ namespace CompetencyFrameworkAPI
 {
     public class DataAccess
     {
+
         public List<string> GetAllTechnologies()
         {
             var technologies = new List<string>();
@@ -145,10 +146,49 @@ namespace CompetencyFrameworkAPI
             }
             return topics;
         }
-
-        public List<Competency> GetAllCompetencyList(string technologyName, string jobTitle)
+   
+        public List<CompetencyFrameworkAPI.Models.UserRatingData> GetAllRatingList()
         {
-            var competencyList = new List<Competency>();
+
+            var ratingList = new List<UserRatingData>();
+
+
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnUserRating";
+                    command.Connection = connection;
+
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var userRatingData = new UserRatingData();
+                        userRatingData.RatingID = (reader.GetInt32(0));
+                        userRatingData.RatingName = (reader.GetString(1));
+                        userRatingData.RatingTypeID = (reader.GetInt32(2));
+                        userRatingData.RatingTypeName = (reader.GetString(3));
+               
+                          
+                        ratingList.Add((userRatingData));
+                    }
+                }
+            }
+            return ratingList;
+        }
+
+
+
+        public List<CompetencyFrameworkAPI.Models.Competency> GetAllCompetencyList(string technologyName, string jobTitle)
+        {
+
+           var competencyList = new List<Competency>();
 
 
             string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
@@ -162,6 +202,7 @@ namespace CompetencyFrameworkAPI
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "ReturnAll";
                     command.Connection = connection;
+
                     var parameter = new SqlParameter
                     {
                         ParameterName = "technologyName",
@@ -189,7 +230,11 @@ namespace CompetencyFrameworkAPI
                         competency.TopicName = reader.GetString(0);
                         competency.AreaName = reader.GetString(1);
                         competency.CompetencyName = reader.GetString(2);
-                        competency.RatingName = reader.GetString(3);
+                        competency.CompetencyID = reader.GetInt32(3);
+                        competency.RatingName = reader.GetString(4);
+                        competency.RatingTypeName = reader.GetString(5);
+                        competency.RatingTypeID = reader.GetInt32(6);
+                        competency.RatingID = reader.GetInt32(7);
                         competencyList.Add((competency));
                     }
                 }
@@ -197,8 +242,13 @@ namespace CompetencyFrameworkAPI
             return competencyList;
         }
 
-        public bool AddUser(User user)
+
+        public List<CompetencyFrameworkAPI.Models.UserData> GetAllUsers()
         {
+
+            var usersList = new List<UserData>();
+
+
             string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
             using (var connection = new SqlConnection())
             {
@@ -208,61 +258,82 @@ namespace CompetencyFrameworkAPI
                 using (var command = new SqlCommand())
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = "ReturnAll";
+                    command.CommandText = "ReturnUsers";
                     command.Connection = connection;
 
-                    var firstNameParameter = new SqlParameter
-                    {
-                        ParameterName = "FirstName",
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 25,
-                        Value = user.FirstName,
-                        Direction = ParameterDirection.Input
-                    };
 
-                    var lastNameParameter = new SqlParameter
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        ParameterName = "LastName",
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 25,
-                        Value = user.LastName,
-                        Direction = ParameterDirection.Input
-                    };
-
-                    var emailAddressParameter = new SqlParameter
-                    {
-                         ParameterName = "EmailAddress",
-                        SqlDbType = SqlDbType.VarChar,
-                        Size = 50,
-                        Value = user.EmailAddress,
-                        Direction = ParameterDirection.Input
-                    };
-
-                    var jobTitleIdParameter = new SqlParameter
-                    {
-                        ParameterName = "JobTitleID",
-                        SqlDbType = SqlDbType.Int,
-                        Value = user.JobTitleId,
-                        Direction = ParameterDirection.Input
-                    };
-
-                    var alreadyExistParameter = new SqlParameter
-                    {
-                        ParameterName = "AlreadyExists",
-                        SqlDbType = SqlDbType.Bit,
-                        Direction = ParameterDirection.Output
-                    };
-
-                    command.Parameters.Add(firstNameParameter);
-                    command.Parameters.Add(lastNameParameter);
-                    command.Parameters.Add(emailAddressParameter);
-                    command.Parameters.Add(jobTitleIdParameter);
-                    command.Parameters.Add(alreadyExistParameter);
-                    command.ExecuteNonQuery();
-                    return (bool)alreadyExistParameter.Value;
+                        var userData = new UserData();
+                        userData.UserID = (reader.GetInt32(0));
+                        userData.FirstName = (reader.GetString(1));
+                        userData.LastName = (reader.GetString(2));
+                        usersList.Add((userData));
+                    }
                 }
             }
+            return usersList;
         }
+
+
+
+        public List<CompetencyFrameworkAPI.Models.GetUserRating> GetAllUserInput(int userID)
+        {
+
+            var userInputList = new List<GetUserRating>();
+
+
+            string connectionString = ConfigurationManager.ConnectionStrings["apiDatabase"].ToString();
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+
+                using (var command = new SqlCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "ReturnUserInput";
+                    command.Connection = connection;
+
+                    var UserIDParameter = new SqlParameter
+                    {
+                        ParameterName = "UserID",
+                        SqlDbType = SqlDbType.Int,
+                        Value = userID,
+                        Direction = ParameterDirection.Input
+                    };
+
+
+                    command.Parameters.Add(UserIDParameter);
+           
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var userInput = new GetUserRating();
+                        userInput.RatingName = (reader.GetString(2)); ;
+                        userInputList.Add((userInput));
+                    }
+                }
+            }
+            return userInputList;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
